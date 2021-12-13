@@ -1,0 +1,16 @@
+## This is an example of specifying instances with a file.
+
+# Each line is an instance relative to trainInstancesDir
+# (see scenario.txt.tmpl) and an optional sequence of instance-specific
+# parameters that will be passed to target-runnerx when invoked on that
+# instance.
+
+# Empty lines and comments are ignored.
+
+#prostata
+#matrizpearson_100_1_genes_f.csv
+#matrizbiologica_100_1_genes_f.csv
+
+#matrizpearson_4000_1_genes_f.csv
+#matrizbiologica_4000_1_genes_f.csv
+hola
