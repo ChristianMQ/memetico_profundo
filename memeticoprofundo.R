@@ -13,13 +13,14 @@ source("funciones_varias.R")
 
 
 deepmemetic<-function(N,k,P_1,G_1,P_2,G_2,Cruz,BusL,Sub,Comu,Me,Mb,alpha,salida){
+  print(paste("P_1 ",P_1,";P_2 ",P_2,";G_2 ",G_2, ";Cruz ",Cruz,";Comu ",Comu))
   Eva<<-0
   if(salida==2){
     soluciones<-replicate((P_1*(k+3)*G_1),NA)
     dim(soluciones)<-c(P_1,k+3,G_1)
   }
   estrategiaDeBusqueda<-c(1:3)
-  print(estrategiaDeBusqueda)
+  #print(estrategiaDeBusqueda)
   #inicia capa 1
   Medoids<-crearpoblacioninicial(N,k,P_1)
   Medoids<-evaluar(N,k,Medoids,Me,Mb,alpha)
@@ -146,19 +147,19 @@ deepmemetic<-function(N,k,P_1,G_1,P_2,G_2,Cruz,BusL,Sub,Comu,Me,Mb,alpha,salida)
           #compartir información
           memoria<-compartirInformacion(N,k,memoria,Com)
         }
-        print(estrategiaDeBusqueda)
+        #print(estrategiaDeBusqueda)
       }
       
       
       Medoids<-subirUnNivel(N,k,Medoids,memoria)
     }
     if(salida==2){
-      print("llegue acá")
+      #print("llegue acá")
       soluciones[,,generacionnivel1]<-Medoids
-      print("llegué acá")
+      #print("llegué acá")
     }
     evaluacionvshipervolumen<<-rbind(evaluacionvshipervolumen,c(Eva,hiperVolumen(N,k,Medoids)))
-    print(paste("Finalizando generación ",generacionnivel1,";Número de evaluaciones actuales ",Eva))
+    #print(paste("Finalizando generación ",generacionnivel1,";Número de evaluaciones actuales ",Eva))
   }
   if(salida==0){
     salidalista<-list(Medoids,hiperVolumen(N,k,Medoids),Eva,generacionnivel1)

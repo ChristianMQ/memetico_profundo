@@ -66,82 +66,82 @@ crearpoblacioninicial<-function(N,k,P_1){
   return(pob)
 }
 
-evaluarporfila<<-function(N,k,f,No_evaluados,Me,Mb,alpha){
-  cercanos<-c()
-  for(i in 1:N){
-    #buscar medoide mas cercano para cada gen
-    grupo<-which.min(alpha*Mb[i,No_evaluados[f,1:k]]+(1-alpha)*Me[i,No_evaluados[f,1:k]]) #0.5*Mb[i,No_evaluados[f,1:k]]+0.5*Me[i,No_evaluados[f,1:k]]
-    cercanos<-c(cercanos, grupo)
-  }
-  
-  #Evaluación Expresión
-  suma_dist<-matrix(0,nrow=k,ncol=k)
-  contador<-matrix(0,nrow=k,ncol=k)
-  
-  for(i in 1:N){
-    for(j in 1:k){
-      if(i!=No_evaluados[f,j]){
-        suma_dist[j,cercanos[i]]<-suma_dist[j,cercanos[i]]+Me[No_evaluados[f,j],i]
-        contador[j,cercanos[i]]<-contador[j,cercanos[i]]+1
-        
-      }
-    }
-  }
-  
-  dist_promedio<-suma_dist/contador
-  silueta<-c()
-  for(i in 1:k){
-    a<-0
-    b<-10
-    for(j in 1:k){
-      if(i==j){
-        a<-dist_promedio[i,j]
-      }else{
-        b<-min(b,dist_promedio[i,j])
-      }
-    }
-    si<-(b-a)/max(a,b)
-    if(is.nan(a)){
-      si<-0
-    }
-    silueta<-c(silueta,si)
-  }
-  No_evaluados[f,k+1]<-mean(silueta) #el valor de silueta será el promedio
-  
-  #Evaluación Biológica
-  suma_dist<-matrix(0,nrow=k,ncol=k)
-  contador<-matrix(0,nrow=k,ncol=k)
-  
-  for(i in 1:N){
-    for(j in 1:k){
-      if(i!=No_evaluados[f,j]){
-        suma_dist[j,cercanos[i]]<-suma_dist[j,cercanos[i]]+Mb[No_evaluados[f,j],i]
-        contador[j,cercanos[i]]<-contador[j,cercanos[i]]+1
-        
-      }
-    }
-  }
-  dist_promedio<-suma_dist/contador
-  silueta<-c()
-  for(i in 1:k){
-    a<-0
-    b<-10
-    for(j in 1:k){
-      if(i==j){
-        a<-dist_promedio[i,j]
-      }else{
-        b<-min(b,dist_promedio[i,j])
-      }
-    }
-    si<-(b-a)/max(a,b)
-    if(is.nan(a)){
-      si<-0
-    }
-    silueta<-c(silueta,si)
-  }
-  No_evaluados[f,k+2]<-mean(silueta)
-  return(c(No_evaluados[f,k+1],No_evaluados[f,k+2]))
-}
+# evaluarporfila<<-function(N,k,f,No_evaluados,Me,Mb,alpha){
+#   cercanos<-c()
+#   for(i in 1:N){
+#     #buscar medoide mas cercano para cada gen
+#     grupo<-which.min(alpha*Mb[i,No_evaluados[f,1:k]]+(1-alpha)*Me[i,No_evaluados[f,1:k]]) #0.5*Mb[i,No_evaluados[f,1:k]]+0.5*Me[i,No_evaluados[f,1:k]]
+#     cercanos<-c(cercanos, grupo)
+#   }
+#   
+#   #Evaluación Expresión
+#   suma_dist<-matrix(0,nrow=k,ncol=k)
+#   contador<-matrix(0,nrow=k,ncol=k)
+#   
+#   for(i in 1:N){
+#     for(j in 1:k){
+#       if(i!=No_evaluados[f,j]){
+#         suma_dist[j,cercanos[i]]<-suma_dist[j,cercanos[i]]+Me[No_evaluados[f,j],i]
+#         contador[j,cercanos[i]]<-contador[j,cercanos[i]]+1
+#         
+#       }
+#     }
+#   }
+#   
+#   dist_promedio<-suma_dist/contador
+#   silueta<-c()
+#   for(i in 1:k){
+#     a<-0
+#     b<-10
+#     for(j in 1:k){
+#       if(i==j){
+#         a<-dist_promedio[i,j]
+#       }else{
+#         b<-min(b,dist_promedio[i,j])
+#       }
+#     }
+#     si<-(b-a)/max(a,b)
+#     if(is.nan(a)){
+#       si<-0
+#     }
+#     silueta<-c(silueta,si)
+#   }
+#   No_evaluados[f,k+1]<-mean(silueta) #el valor de silueta será el promedio
+#   
+#   #Evaluación Biológica
+#   suma_dist<-matrix(0,nrow=k,ncol=k)
+#   contador<-matrix(0,nrow=k,ncol=k)
+#   
+#   for(i in 1:N){
+#     for(j in 1:k){
+#       if(i!=No_evaluados[f,j]){
+#         suma_dist[j,cercanos[i]]<-suma_dist[j,cercanos[i]]+Mb[No_evaluados[f,j],i]
+#         contador[j,cercanos[i]]<-contador[j,cercanos[i]]+1
+#         
+#       }
+#     }
+#   }
+#   dist_promedio<-suma_dist/contador
+#   silueta<-c()
+#   for(i in 1:k){
+#     a<-0
+#     b<-10
+#     for(j in 1:k){
+#       if(i==j){
+#         a<-dist_promedio[i,j]
+#       }else{
+#         b<-min(b,dist_promedio[i,j])
+#       }
+#     }
+#     si<-(b-a)/max(a,b)
+#     if(is.nan(a)){
+#       si<-0
+#     }
+#     silueta<-c(silueta,si)
+#   }
+#   No_evaluados[f,k+2]<-mean(silueta)
+#   return(c(No_evaluados[f,k+1],No_evaluados[f,k+2]))
+# }
 
 #No_evaluados datos a evaluar
 #Me matriz de expresión
@@ -154,209 +154,209 @@ evaluarporfila<<-function(N,k,f,No_evaluados,Me,Mb,alpha){
 
 
 
-evaluarB<-function(N,k,No_evaluados,Me,Mb,alpha){
-  #primero se evalua si las configuraciones de Medoides a evaluar son varias o solo uno.
-  print("evaluando")
-  tipo<-length(dim(No_evaluados))
-  if(tipo==2){
-    filas<-length(No_evaluados[,1])
-    
-    
-    
-    # #loading example data
-    # #data("penguins")
-    # 
-    # parallel::detectCores()
-    # 
-    # n.cores <- parallel::detectCores() - 1
-    # 
-    # #create the cluster
-    # my.cluster <- parallel::makeCluster(
-    #   n.cores, 
-    #   type = "PSOCK"
-    # )
-    # 
-    # #check cluster definition (optional)
-    # print(my.cluster)
-    # 
-    # 
-    # #register it to be used by %dopar%
-    # doParallel::registerDoParallel(cl = my.cluster)
-    # 
-    # #check if it is registered (optional)
-    # foreach::getDoParRegistered()
-    # 
-    # foreach::getDoParWorkers()
-    
-    ###################################################
-    evaluarporfila<<-function(N,k,f,No_evaluados,Me,Mb,alpha){
-      cercanos<-c()
-      for(i in 1:N){
-        #buscar medoide mas cercano para cada gen
-        grupo<-which.min(alpha*Mb[i,No_evaluados[f,1:k]]+(1-alpha)*Me[i,No_evaluados[f,1:k]]) #0.5*Mb[i,No_evaluados[f,1:k]]+0.5*Me[i,No_evaluados[f,1:k]]
-        cercanos<-c(cercanos, grupo)
-      }
-      
-      #Evaluación Expresión
-      suma_dist<-matrix(0,nrow=k,ncol=k)
-      contador<-matrix(0,nrow=k,ncol=k)
-      
-      for(i in 1:N){
-        for(j in 1:k){
-          if(i!=No_evaluados[f,j]){
-            suma_dist[j,cercanos[i]]<-suma_dist[j,cercanos[i]]+Me[No_evaluados[f,j],i]
-            contador[j,cercanos[i]]<-contador[j,cercanos[i]]+1
-            
-          }
-        }
-      }
-      
-      dist_promedio<-suma_dist/contador
-      silueta<-c()
-      for(i in 1:k){
-        a<-0
-        b<-10
-        for(j in 1:k){
-          if(i==j){
-            a<-dist_promedio[i,j]
-          }else{
-            b<-min(b,dist_promedio[i,j])
-          }
-        }
-        si<-(b-a)/max(a,b)
-        if(is.nan(a)){
-          si<-0
-        }
-        silueta<-c(silueta,si)
-      }
-      No_evaluados[f,k+1]<-mean(silueta) #el valor de silueta será el promedio
-      
-      #Evaluación Biológica
-      suma_dist<-matrix(0,nrow=k,ncol=k)
-      contador<-matrix(0,nrow=k,ncol=k)
-      
-      for(i in 1:N){
-        for(j in 1:k){
-          if(i!=No_evaluados[f,j]){
-            suma_dist[j,cercanos[i]]<-suma_dist[j,cercanos[i]]+Mb[No_evaluados[f,j],i]
-            contador[j,cercanos[i]]<-contador[j,cercanos[i]]+1
-            
-          }
-        }
-      }
-      dist_promedio<-suma_dist/contador
-      silueta<-c()
-      for(i in 1:k){
-        a<-0
-        b<-10
-        for(j in 1:k){
-          if(i==j){
-            a<-dist_promedio[i,j]
-          }else{
-            b<-min(b,dist_promedio[i,j])
-          }
-        }
-        si<-(b-a)/max(a,b)
-        if(is.nan(a)){
-          si<-0
-        }
-        silueta<-c(silueta,si)
-      }
-      No_evaluados[f,k+2]<-mean(silueta)
-      return(c(No_evaluados[f,k+1],No_evaluados[f,k+2]))
-    }
-    
-    
-    evaluacionbioyexp<-foreach(f=1:filas,.combine='rbind') %dopar% {evaluarporfila(N,k,f,No_evaluados,Me,Mb,alpha)}
-    ##############################################################################
-    
-    No_evaluados[,c(k+1,k+2)]<-evaluacionbioyexp
-    Eva<<-Eva+filas
-    print(paste("Número de evaluaciones actuales: ",Eva))
-    return(No_evaluados)
-  }else{
-    cercanos<-c()
-    for(i in 1:N){
-      #buscar medoide mas cercano para cada gen
-      grupo<-which.min(alpha*Mb[i,No_evaluados[1:k]]+(1-alpha)*Me[i,No_evaluados[1:k]]) #0.5*Mb[i,No_evaluados[1:k]]+0.5*Me[i,No_evaluados[1:k]]
-      cercanos<-c(cercanos, grupo)
-    }
-    
-    #Evaluación Expresión
-    suma_dist<-matrix(0,nrow=k,ncol=k)
-    contador<-matrix(0,nrow=k,ncol=k)
-    
-    for(i in 1:N){
-      for(j in 1:k){
-        if(i!=No_evaluados[j]){
-          suma_dist[j,cercanos[i]]<-suma_dist[j,cercanos[i]]+Me[No_evaluados[j],i]
-          contador[j,cercanos[i]]<-contador[j,cercanos[i]]+1
-          
-        }
-      }
-    }
-    
-    dist_promedio<-suma_dist/contador
-    silueta<-c()
-    for(i in 1:k){
-      a<-0
-      b<-10
-      for(j in 1:k){
-        if(i==j){
-          a<-dist_promedio[i,j]
-        }else{
-          b<-min(b,dist_promedio[i,j])
-        }
-      }
-      si<-(b-a)/max(a,b)
-      if(is.nan(a)){
-        si<-0
-      }
-      silueta<-c(silueta,si)
-    }
-    No_evaluados[k+1]<-mean(silueta) #el valor de silueta será el promedio
-    
-    #Evaluación Biológica
-    suma_dist<-matrix(0,nrow=k,ncol=k)
-    contador<-matrix(0,nrow=k,ncol=k)
-    
-    for(i in 1:N){
-      for(j in 1:k){
-        if(i!=No_evaluados[j]){
-          suma_dist[j,cercanos[i]]<-suma_dist[j,cercanos[i]]+Mb[No_evaluados[j],i]
-          contador[j,cercanos[i]]<-contador[j,cercanos[i]]+1
-          
-        }
-      }
-    }
-    dist_promedio<-suma_dist/contador
-    silueta<-c()
-    for(i in 1:k){
-      a<-0
-      b<-10
-      for(j in 1:k){
-        if(i==j){
-          a<-dist_promedio[i,j]
-        }else{
-          b<-min(b,dist_promedio[i,j])
-        }
-      }
-      si<-(b-a)/max(a,b)
-      if(is.nan(a)){
-        si<-0
-      }
-      silueta<-c(silueta,si)
-    }
-    No_evaluados[k+2]<-mean(silueta) #el valor de silueta será el promedio
-    Eva<<-Eva+1
-    print(paste("Número de evaluaciones actuales: ",Eva))
-    return(No_evaluados)
-  }
-}
+# evaluarB<-function(N,k,No_evaluados,Me,Mb,alpha){
+#   #primero se evalua si las configuraciones de Medoides a evaluar son varias o solo uno.
+#   #print("evaluando")
+#   tipo<-length(dim(No_evaluados))
+#   if(tipo==2){
+#     filas<-length(No_evaluados[,1])
+#     
+#     
+#     
+#     # #loading example data
+#     # #data("penguins")
+#     # 
+#     # parallel::detectCores()
+#     # 
+#     # n.cores <- parallel::detectCores() - 1
+#     # 
+#     # #create the cluster
+#     # my.cluster <- parallel::makeCluster(
+#     #   n.cores, 
+#     #   type = "PSOCK"
+#     # )
+#     # 
+#     # #check cluster definition (optional)
+#     # print(my.cluster)
+#     # 
+#     # 
+#     # #register it to be used by %dopar%
+#     # doParallel::registerDoParallel(cl = my.cluster)
+#     # 
+#     # #check if it is registered (optional)
+#     # foreach::getDoParRegistered()
+#     # 
+#     # foreach::getDoParWorkers()
+#     
+#     ###################################################
+#     evaluarporfila<<-function(N,k,f,No_evaluados,Me,Mb,alpha){
+#       cercanos<-c()
+#       for(i in 1:N){
+#         #buscar medoide mas cercano para cada gen
+#         grupo<-which.min(alpha*Mb[i,No_evaluados[f,1:k]]+(1-alpha)*Me[i,No_evaluados[f,1:k]]) #0.5*Mb[i,No_evaluados[f,1:k]]+0.5*Me[i,No_evaluados[f,1:k]]
+#         cercanos<-c(cercanos, grupo)
+#       }
+#       
+#       #Evaluación Expresión
+#       suma_dist<-matrix(0,nrow=k,ncol=k)
+#       contador<-matrix(0,nrow=k,ncol=k)
+#       
+#       for(i in 1:N){
+#         for(j in 1:k){
+#           if(i!=No_evaluados[f,j]){
+#             suma_dist[j,cercanos[i]]<-suma_dist[j,cercanos[i]]+Me[No_evaluados[f,j],i]
+#             contador[j,cercanos[i]]<-contador[j,cercanos[i]]+1
+#             
+#           }
+#         }
+#       }
+#       
+#       dist_promedio<-suma_dist/contador
+#       silueta<-c()
+#       for(i in 1:k){
+#         a<-0
+#         b<-10
+#         for(j in 1:k){
+#           if(i==j){
+#             a<-dist_promedio[i,j]
+#           }else{
+#             b<-min(b,dist_promedio[i,j])
+#           }
+#         }
+#         si<-(b-a)/max(a,b)
+#         if(is.nan(a)){
+#           si<-0
+#         }
+#         silueta<-c(silueta,si)
+#       }
+#       No_evaluados[f,k+1]<-mean(silueta) #el valor de silueta será el promedio
+#       
+#       #Evaluación Biológica
+#       suma_dist<-matrix(0,nrow=k,ncol=k)
+#       contador<-matrix(0,nrow=k,ncol=k)
+#       
+#       for(i in 1:N){
+#         for(j in 1:k){
+#           if(i!=No_evaluados[f,j]){
+#             suma_dist[j,cercanos[i]]<-suma_dist[j,cercanos[i]]+Mb[No_evaluados[f,j],i]
+#             contador[j,cercanos[i]]<-contador[j,cercanos[i]]+1
+#             
+#           }
+#         }
+#       }
+#       dist_promedio<-suma_dist/contador
+#       silueta<-c()
+#       for(i in 1:k){
+#         a<-0
+#         b<-10
+#         for(j in 1:k){
+#           if(i==j){
+#             a<-dist_promedio[i,j]
+#           }else{
+#             b<-min(b,dist_promedio[i,j])
+#           }
+#         }
+#         si<-(b-a)/max(a,b)
+#         if(is.nan(a)){
+#           si<-0
+#         }
+#         silueta<-c(silueta,si)
+#       }
+#       No_evaluados[f,k+2]<-mean(silueta)
+#       return(c(No_evaluados[f,k+1],No_evaluados[f,k+2]))
+#     }
+#     
+#     
+#     evaluacionbioyexp<-foreach(f=1:filas,.combine='rbind') %dopar% {evaluarporfila(N,k,f,No_evaluados,Me,Mb,alpha)}
+#     ##############################################################################
+#     
+#     No_evaluados[,c(k+1,k+2)]<-evaluacionbioyexp
+#     Eva<<-Eva+filas
+#     #???print(paste("Número de evaluaciones actuales: ",Eva))
+#     return(No_evaluados)
+#   }else{
+#     cercanos<-c()
+#     for(i in 1:N){
+#       #buscar medoide mas cercano para cada gen
+#       grupo<-which.min(alpha*Mb[i,No_evaluados[1:k]]+(1-alpha)*Me[i,No_evaluados[1:k]]) #0.5*Mb[i,No_evaluados[1:k]]+0.5*Me[i,No_evaluados[1:k]]
+#       cercanos<-c(cercanos, grupo)
+#     }
+#     
+#     #Evaluación Expresión
+#     suma_dist<-matrix(0,nrow=k,ncol=k)
+#     contador<-matrix(0,nrow=k,ncol=k)
+#     
+#     for(i in 1:N){
+#       for(j in 1:k){
+#         if(i!=No_evaluados[j]){
+#           suma_dist[j,cercanos[i]]<-suma_dist[j,cercanos[i]]+Me[No_evaluados[j],i]
+#           contador[j,cercanos[i]]<-contador[j,cercanos[i]]+1
+#           
+#         }
+#       }
+#     }
+#     
+#     dist_promedio<-suma_dist/contador
+#     silueta<-c()
+#     for(i in 1:k){
+#       a<-0
+#       b<-10
+#       for(j in 1:k){
+#         if(i==j){
+#           a<-dist_promedio[i,j]
+#         }else{
+#           b<-min(b,dist_promedio[i,j])
+#         }
+#       }
+#       si<-(b-a)/max(a,b)
+#       if(is.nan(a)){
+#         si<-0
+#       }
+#       silueta<-c(silueta,si)
+#     }
+#     No_evaluados[k+1]<-mean(silueta) #el valor de silueta será el promedio
+#     
+#     #Evaluación Biológica
+#     suma_dist<-matrix(0,nrow=k,ncol=k)
+#     contador<-matrix(0,nrow=k,ncol=k)
+#     
+#     for(i in 1:N){
+#       for(j in 1:k){
+#         if(i!=No_evaluados[j]){
+#           suma_dist[j,cercanos[i]]<-suma_dist[j,cercanos[i]]+Mb[No_evaluados[j],i]
+#           contador[j,cercanos[i]]<-contador[j,cercanos[i]]+1
+#           
+#         }
+#       }
+#     }
+#     dist_promedio<-suma_dist/contador
+#     silueta<-c()
+#     for(i in 1:k){
+#       a<-0
+#       b<-10
+#       for(j in 1:k){
+#         if(i==j){
+#           a<-dist_promedio[i,j]
+#         }else{
+#           b<-min(b,dist_promedio[i,j])
+#         }
+#       }
+#       si<-(b-a)/max(a,b)
+#       if(is.nan(a)){
+#         si<-0
+#       }
+#       silueta<-c(silueta,si)
+#     }
+#     No_evaluados[k+2]<-mean(silueta) #el valor de silueta será el promedio
+#     Eva<<-Eva+1
+#     #print(paste("Número de evaluaciones actuales: ",Eva))
+#     return(No_evaluados)
+#   }
+# }
 
 evaluar<-function(N,k,No_evaluados,Me,Mb,alpha){
   #primero se evalua si las configuraciones de Medoides a evaluar son varias o solo uno.
-  print("evaluando")
+  #print("evaluando")
   tipo<-length(dim(No_evaluados))
   if(tipo==2){
     filas<-length(No_evaluados[,1])
@@ -436,7 +436,7 @@ evaluar<-function(N,k,No_evaluados,Me,Mb,alpha){
       No_evaluados[f,k+2]<-mean(silueta) #el valor de silueta será el promedio
     }
     Eva<<-Eva+filas
-    print(paste("Número de evaluaciones actuales: ",Eva))
+    #print(paste("Número de evaluaciones actuales: ",Eva))
     return(No_evaluados)
   }else{
     cercanos<-c()
@@ -513,93 +513,93 @@ evaluar<-function(N,k,No_evaluados,Me,Mb,alpha){
     }
     No_evaluados[k+2]<-mean(silueta) #el valor de silueta será el promedio
     Eva<<-Eva+1
-    print(paste("Número de evaluaciones actuales: ",Eva))
+    #print(paste("Número de evaluaciones actuales: ",Eva))
     return(No_evaluados)
   }
 }
 
 
 
-evaluarA<-function(N,k,No_evaluados,Me,Mb,alpha){
-  filas<-length(No_evaluados[,1])
-  for(f in 1:filas){
-    cercanos<-c()
-    for(i in 1:N){
-      #buscar medoide mas cercano para cada gen
-      grupo<-which.min(alpha*Mb[i,No_evaluados[f,1:k]]+(1-alpha)*Me[i,No_evaluados[f,1:k]]) #0.5*Mb[i,No_evaluados[f,1:k]]+0.5*Me[i,No_evaluados[f,1:k]]
-      cercanos<-c(cercanos, grupo)
-    }
-    
-    #Evaluación Expresión
-    suma_dist<-matrix(0,nrow=k,ncol=k)
-    contador<-matrix(0,nrow=k,ncol=k)
-    
-    for(i in 1:N){
-      for(j in 1:k){
-        if(i!=No_evaluados[f,j]){
-          suma_dist[j,cercanos[i]]<-suma_dist[j,cercanos[i]]+Me[No_evaluados[f,j],i]
-          contador[j,cercanos[i]]<-contador[j,cercanos[i]]+1
-
-        }
-      }
-    }
-
-    dist_promedio<-suma_dist/contador
-    silueta<-c()
-    for(i in 1:k){
-      a<-0
-      b<-10
-      for(j in 1:k){
-        if(i==j){
-          a<-dist_promedio[i,j]
-        }else{
-          b<-min(b,dist_promedio[i,j])
-        }
-      }
-      si<-(b-a)/max(a,b)
-      if(is.nan(a)){
-        si<-0
-      }
-      silueta<-c(silueta,si)
-    }
-    No_evaluados[f,k+1]<-mean(silueta) #el valor de silueta será el promedio
-    
-    #Evaluación Biológica
-    suma_dist<-matrix(0,nrow=k,ncol=k)
-    contador<-matrix(0,nrow=k,ncol=k)
-    
-    for(i in 1:N){
-      for(j in 1:k){
-        if(i!=No_evaluados[f,j]){
-          suma_dist[j,cercanos[i]]<-suma_dist[j,cercanos[i]]+Mb[No_evaluados[f,j],i]
-          contador[j,cercanos[i]]<-contador[j,cercanos[i]]+1
-          
-        }
-      }
-    }
-    dist_promedio<-suma_dist/contador
-    silueta<-c()
-    for(i in 1:k){
-      a<-0
-      b<-10
-      for(j in 1:k){
-        if(i==j){
-          a<-dist_promedio[i,j]
-        }else{
-          b<-min(b,dist_promedio[i,j])
-        }
-      }
-      si<-(b-a)/max(a,b)
-      if(is.nan(a)){
-        si<-0
-      }
-      silueta<-c(silueta,si)
-    }
-    No_evaluados[f,k+2]<-mean(silueta) #el valor de silueta será el promedio
-  }
-  Eva<<-Eva+filas
-  return(No_evaluados)
-}
+# evaluarA<-function(N,k,No_evaluados,Me,Mb,alpha){
+#   filas<-length(No_evaluados[,1])
+#   for(f in 1:filas){
+#     cercanos<-c()
+#     for(i in 1:N){
+#       #buscar medoide mas cercano para cada gen
+#       grupo<-which.min(alpha*Mb[i,No_evaluados[f,1:k]]+(1-alpha)*Me[i,No_evaluados[f,1:k]]) #0.5*Mb[i,No_evaluados[f,1:k]]+0.5*Me[i,No_evaluados[f,1:k]]
+#       cercanos<-c(cercanos, grupo)
+#     }
+#     
+#     #Evaluación Expresión
+#     suma_dist<-matrix(0,nrow=k,ncol=k)
+#     contador<-matrix(0,nrow=k,ncol=k)
+#     
+#     for(i in 1:N){
+#       for(j in 1:k){
+#         if(i!=No_evaluados[f,j]){
+#           suma_dist[j,cercanos[i]]<-suma_dist[j,cercanos[i]]+Me[No_evaluados[f,j],i]
+#           contador[j,cercanos[i]]<-contador[j,cercanos[i]]+1
+# 
+#         }
+#       }
+#     }
+# 
+#     dist_promedio<-suma_dist/contador
+#     silueta<-c()
+#     for(i in 1:k){
+#       a<-0
+#       b<-10
+#       for(j in 1:k){
+#         if(i==j){
+#           a<-dist_promedio[i,j]
+#         }else{
+#           b<-min(b,dist_promedio[i,j])
+#         }
+#       }
+#       si<-(b-a)/max(a,b)
+#       if(is.nan(a)){
+#         si<-0
+#       }
+#       silueta<-c(silueta,si)
+#     }
+#     No_evaluados[f,k+1]<-mean(silueta) #el valor de silueta será el promedio
+#     
+#     #Evaluación Biológica
+#     suma_dist<-matrix(0,nrow=k,ncol=k)
+#     contador<-matrix(0,nrow=k,ncol=k)
+#     
+#     for(i in 1:N){
+#       for(j in 1:k){
+#         if(i!=No_evaluados[f,j]){
+#           suma_dist[j,cercanos[i]]<-suma_dist[j,cercanos[i]]+Mb[No_evaluados[f,j],i]
+#           contador[j,cercanos[i]]<-contador[j,cercanos[i]]+1
+#           
+#         }
+#       }
+#     }
+#     dist_promedio<-suma_dist/contador
+#     silueta<-c()
+#     for(i in 1:k){
+#       a<-0
+#       b<-10
+#       for(j in 1:k){
+#         if(i==j){
+#           a<-dist_promedio[i,j]
+#         }else{
+#           b<-min(b,dist_promedio[i,j])
+#         }
+#       }
+#       si<-(b-a)/max(a,b)
+#       if(is.nan(a)){
+#         si<-0
+#       }
+#       silueta<-c(silueta,si)
+#     }
+#     No_evaluados[f,k+2]<-mean(silueta) #el valor de silueta será el promedio
+#   }
+#   Eva<<-Eva+filas
+#   return(No_evaluados)
+# }
 
 
 

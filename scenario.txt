@@ -75,7 +75,7 @@ maxExperiments = 1500
 
 ## Maximum number of decimal places that are significant for numerical
 ## (real) parameters.
-# digits = 4
+digits = 2
 
 ## Debug level of the output of irace. Set this to 0 to silence all debug
 ## messages. Higher values provide more verbose debug messages.
@@ -100,10 +100,10 @@ debugLevel = 2
 
 ## Number of instances evaluated before the first elimination test. It
 ## must be a multiple of eachTest.
-firstTest = 20
+#firstTest = 20
 
 ## Number of instances evaluated between elimination tests.
-eachTest = 5
+#???eachTest = 5
 
 ## Minimum number of configurations needed to continue the execution of
 ## each race (iteration).
@@ -129,7 +129,7 @@ eachTest = 5
 
 ## Number of calls to targetRunner to execute in parallel. Values 0 or 1
 ## mean no parallelization.
-#parallel = 11
+parallel = 8
 
 ## Enable/disable load-balancing when executing experiments in parallel.
 ## Load-balancing makes better use of computing resources, but increases

@@ -1,3 +1,5 @@
+
+
 targetRunner<-function(experiment, scenario){
   source("memeticoprofundo.R")
   configuration<-experiment$configuration
@@ -6,6 +8,7 @@ targetRunner<-function(experiment, scenario){
   G_2<-as.numeric(configuration$G_2)
   Cruz<-as.numeric(configuration$Cruz)
   Comu<-as.numeric(configuration$Comu)
+  
   Me<-(read.csv("matrizpearson_100_1_genes_f.csv"))[,-1]
   Mb<-(read.csv("matrizbiologica_100_1_genes_f.csv"))[,-1]
   # Me<-Me[,-1]
@@ -21,7 +24,7 @@ targetRunner<-function(experiment, scenario){
   #Cruz<-0.8    #porcentaje de cruzamiento para duplicar agentes PPPPPPPPPPPPPPPPPPPP
   BusL<-0    #porcentaje de Busquedas locales (no tiene busqueda local NSGAII, finalmente no se toma en cuenta)
   
-  #Com<-1       #tipo de comunicación entre poblaciones de la capa 2 PPPPPPPPPPPPPPPPPPPP
+  #Comu<-1       #tipo de comunicación entre poblaciones de la capa 2 PPPPPPPPPPPPPPPPPPPP
   
   Eva<-0       #contador de evaluaciones
   EvaM<-2000   #evaluaciones máximas
