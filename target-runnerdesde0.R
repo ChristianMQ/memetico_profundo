@@ -1,4 +1,4 @@
-
+library("irace")
 
 targetRunner<-function(experiment, scenario){
   source("memeticoprofundo.R")
@@ -13,31 +13,30 @@ targetRunner<-function(experiment, scenario){
   Mb<-(read.csv("matrizbiologica_100_1_genes_f.csv"))[,-1]
   # Me<-Me[,-1]
   # Mb<-Mb[,-1]
-  N<-100       #n鷐ero de genes
-  k<-4         #n鷐ero de grupos
+  N<-100       #n煤mero de genes
+  k<-4         #n煤mero de grupos
   G_1<-5      #generaciones capa 1 depende de numero de evaluaciones (finalmente no se toma en cuenta)
-  #P_1<-20     #poblaci髇 de agentes capa 1 PPPPPPPPPPPPPPPPPPPP
+  #P_1<-20     #poblaci贸n de agentes capa 1 PPPPPPPPPPPPPPPPPPPP
   #G_2<-1       #generaciones capa 2 PPPPPPPPPPPPPPPPPPPP
-  #P_2<-5       #poblaci髇 capa 2 P PPPPPPPPPPPPPPPPPPPP
+  #P_2<-5       #poblaci贸n capa 2 P PPPPPPPPPPPPPPPPPPPP
   Sub<-4       #porcentaje de NSGA-II de la capa 2 eliminado
   
   #Cruz<-0.8    #porcentaje de cruzamiento para duplicar agentes PPPPPPPPPPPPPPPPPPPP
   BusL<-0    #porcentaje de Busquedas locales (no tiene busqueda local NSGAII, finalmente no se toma en cuenta)
   
-  #Comu<-1       #tipo de comunicaci髇 entre poblaciones de la capa 2 PPPPPPPPPPPPPPPPPPPP
+  #Comu<-1       #tipo de comunicaci贸n entre poblaciones de la capa 2 PPPPPPPPPPPPPPPPPPPP
   
   Eva<-0       #contador de evaluaciones
-  EvaM<-2000   #evaluaciones m醲imas
-  alpha<-0.5   #factor de Asociaci髇
+  EvaM<-2000   #evaluaciones m谩ximas
+  alpha<-0.5   #factor de Asociaci贸n
   
-  guardarSalidas<-1    #0 guarda datos en una lista de la 鷏tima generaci髇, 1 solo entrega el hipervolumen de la ultima generaci髇, 2 como estaba antes
+  guardarSalidas<-1    #0 guarda datos en una lista de la 煤ltima generaci贸n, 1 solo entrega el hipervolumen de la ultima generaci贸n, 2 como estaba antes
   
   mejor<-deepmemetic(N,k,P_1,G_1,P_2,G_2,Cruz,BusL,Sub,Comu,Me,Mb,alpha,guardarSalidas)
   return(list("cost"=-mejor))
 }
 
 main<-function(){
-  library("irace")
   archivoScenario<-readScenario("scenario.txt")
   archivoParameters<-readParameters("parameters.txt")
   irace(scenario=archivoScenario,parameters = archivoParameters)
