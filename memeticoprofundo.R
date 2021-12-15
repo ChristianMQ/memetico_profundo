@@ -12,8 +12,8 @@ source("funciones_varias.R")
 #Com tipo de comunicación entre poblaciones de la capa 2
 
 
-deepmemetic<-function(N,k,P_1,G_1,P_2,G_2,Cruz,BusL,Sub,Comu,Me,Mb,alpha,salida){
-  print(paste("P_1 ",P_1,";P_2 ",P_2,";G_2 ",G_2, ";Cruz ",Cruz,";Comu ",Comu))
+deepmemetic<-function(N,k,P_1,G_1,P_2,G_2,Cruz,BusL,Sub,Com,Me,Mb,alpha,EvaM,salida){
+  #print(paste("P_1 ",P_1,";P_2 ",P_2,";G_2 ",G_2, ";Cruz ",Cruz,";Com ",Com))
   Eva<<-0
   if(salida==2){
     soluciones<-replicate((P_1*(k+3)*G_1),NA)
@@ -38,6 +38,7 @@ deepmemetic<-function(N,k,P_1,G_1,P_2,G_2,Cruz,BusL,Sub,Comu,Me,Mb,alpha,salida)
     Medoids<-Medoids[-c((P_1+1):(2*P_1)),]
     #inicia la capa 2
     if(P_2>0 & Medoids[2,k+3]==1 & Eva<EvaM){
+      HVnivel1<-hiperVolumen(N,k,Medoids)
       Nagentepareto<-numeroAgentePareto(N,k,P_1,Medoids)
       memoria<-replicate((P_2*(k+3)*Nagentepareto),NA)
       dim(memoria)<-c(P_2,k+3,Nagentepareto)
@@ -45,14 +46,17 @@ deepmemetic<-function(N,k,P_1,G_1,P_2,G_2,Cruz,BusL,Sub,Comu,Me,Mb,alpha,salida)
       for(j in 1:G_2){
         for(a in 1:Nagentepareto){ #paralelizable********
           
-          mejorosiono<<-F
-          
           if(estrategia[a]==1){ #NSGAII    #a es el número del agente del nivel 2
             if(j==1){
               memoria[,,a]<-crearpoblacioninicialEvaluadaDesdeSolucion(N,k,P_2,Medoids[a,],alpha,Me,Mb)
             }
             memoria[,,a]<-NSGAIInivel2(N,k,memoria[,,a],P_2,Cruz,BusL,Me,Mb,alpha)
-            if(mejorosiono==T){
+            comparacionconpadre<-rbind(memoria[,,a],Medoids)
+            comparacionconpadre<-ordenarNoDominados(N,k,comparacionconpadre)
+            comparacionconpadre<-crowdingDistance(N,k,comparacionconpadre,0)
+            comparacionconpadre<-eliminarRepetidos(N,k,comparacionconpadre)
+            HVnivel2<-hiperVolumen(N,k,comparacionconpadre)
+            if(HVnivel2>HVnivel1){
               estrategiaDeBusqueda<-c(estrategiaDeBusqueda,1)
             }
           }
@@ -66,36 +70,24 @@ deepmemetic<-function(N,k,P_1,G_1,P_2,G_2,Cruz,BusL,Sub,Comu,Me,Mb,alpha,salida)
               partida<-memoria[azar,,a]
             }
             exploracion<-busquedaLMOLS(N,k,partida,Me,Mb,P_2,alpha)
-            if(j==1){
-              comparacionconpadre<-rbind(exploracion,Medoids)
-              comparacionconpadre<-ordenarNoDominados(N,k,exploracion)
-              comparacionconpadre<-crowdingDistance(N,k,exploracion,0)
-              comparacionconpadre<-eliminarRepetidos(N,k,exploracion)
-              hv1<-hiperVolumen(N,k,Medoids)
-              hv2<-hiperVolumen(N,k,comparacionconpadre)
-              if(hv2>hv1){
-                mejorosiono<<-T
-              }
-            }
-            if(j!=1){
-              exploracion<-rbind(exploracion,memoria[,,a])
-            }
-            exploracion<-ordenarNoDominados(N,k,exploracion)
-            exploracion<-crowdingDistance(N,k,exploracion,0)
             exploracion<-eliminarRepetidos(N,k,exploracion)
-            if(j!=1){
-              hv1<-hiperVolumen(N,k,memoria[,,a])
-              hv2<-hiperVolumen(N,k,exploracion)
-              if(hv2>hv1){
-                mejorosiono<<-T
-              }
-            }
-            exploracion<-exploracion[-c((P_2+1):(3*P_2)),]
-            exploracion<-corregirTamano(N,k,exploracion,P_2)
-            if(mejorosiono==T){
-              estrategiaDeBusqueda<-c(estrategiaDeBusqueda,2)
+            exploracion<-exploracion[-c((P_2+1):(2*P_2)),]
+            filasexploracion<-length(exploracion[,1])
+            if(filasexploracion<P_2){
+              exploracion<-corregirTamano(N,k,exploracion,P_2)
+            }else{
+              exploracion<-ordenarNoDominados(N,k,exploracion)
+              exploracion<-crowdingDistance(N,k,exploracion,0)
             }
             memoria[,,a]<-exploracion
+            comparacionconpadre<-rbind(exploracion,Medoids)
+            comparacionconpadre<-ordenarNoDominados(N,k,comparacionconpadre)
+            comparacionconpadre<-crowdingDistance(N,k,comparacionconpadre,0)
+            comparacionconpadre<-eliminarRepetidos(N,k,comparacionconpadre)
+            HVnivel2<-hiperVolumen(N,k,comparacionconpadre)
+            if(HVnivel2>HVnivel1){
+              estrategiaDeBusqueda<-c(estrategiaDeBusqueda,2)
+            }
           }
           
           if(estrategia[a]==3){
@@ -107,36 +99,24 @@ deepmemetic<-function(N,k,P_1,G_1,P_2,G_2,Cruz,BusL,Sub,Comu,Me,Mb,alpha,salida)
               partida<-memoria[azar,,a]
             }
             exploracion<-busquedaNMOLS(N,k,partida,Me,Mb,P_2,alpha)
-            if(j==1){
-              comparacionconpadre<-rbind(exploracion,Medoids)
-              comparacionconpadre<-ordenarNoDominados(N,k,exploracion)
-              comparacionconpadre<-crowdingDistance(N,k,exploracion,0)
-              comparacionconpadre<-eliminarRepetidos(N,k,exploracion)
-              hv1<-hiperVolumen(N,k,Medoids)
-              hv2<-hiperVolumen(N,k,comparacionconpadre)
-              if(hv2>hv1){
-                mejorosiono<<-T
-              }
-            }
-            if(j!=1){
-              exploracion<-rbind(exploracion,memoria[,,a])
-            }
-            exploracion<-ordenarNoDominados(N,k,exploracion)
-            exploracion<-crowdingDistance(N,k,exploracion,0)
             exploracion<-eliminarRepetidos(N,k,exploracion)
-            if(j!=1){
-              hv1<-hiperVolumen(N,k,memoria[,,a])
-              hv2<-hiperVolumen(N,k,exploracion)
-              if(hv2>hv1){
-                mejorosiono<<-T
-              }
-            }
-            exploracion<-exploracion[-c((P_2+1):(3*P_2)),]
-            exploracion<-corregirTamano(N,k,exploracion,P_2)
-            if(mejorosiono==T){
-              estrategiaDeBusqueda<-c(estrategiaDeBusqueda,3)
+            exploracion<-exploracion[-c((P_2+1):(2*P_2)),]
+            filasexploracion<-length(exploracion[,1])
+            if(filasexploracion<P_2){
+              exploracion<-corregirTamano(N,k,exploracion,P_2)
+            }else{
+              exploracion<-ordenarNoDominados(N,k,exploracion)
+              exploracion<-crowdingDistance(N,k,exploracion,0)
             }
             memoria[,,a]<-exploracion
+            comparacionconpadre<-rbind(exploracion,Medoids)
+            comparacionconpadre<-ordenarNoDominados(N,k,comparacionconpadre)
+            comparacionconpadre<-crowdingDistance(N,k,comparacionconpadre,0)
+            comparacionconpadre<-eliminarRepetidos(N,k,comparacionconpadre)
+            HVnivel2<-hiperVolumen(N,k,comparacionconpadre)
+            if(HVnivel2>HVnivel1){
+              estrategiaDeBusqueda<-c(estrategiaDeBusqueda,3)
+            }
           }
           
           if(estrategia[a]==4){
@@ -158,7 +138,7 @@ deepmemetic<-function(N,k,P_1,G_1,P_2,G_2,Cruz,BusL,Sub,Comu,Me,Mb,alpha,salida)
       soluciones[,,generacionnivel1]<-Medoids
       #print("llegué acá")
     }
-    evaluacionvshipervolumen<<-rbind(evaluacionvshipervolumen,c(Eva,hiperVolumen(N,k,Medoids)))
+    #evaluacionvshipervolumen<<-rbind(evaluacionvshipervolumen,c(Eva,hiperVolumen(N,k,Medoids)))
     #print(paste("Finalizando generación ",generacionnivel1,";Número de evaluaciones actuales ",Eva))
   }
   if(salida==0){

@@ -1,6 +1,6 @@
-#N número de genes
-#k número de grupos
-#P_1 población de agentes capa 1
+#N nÃºmero de genes
+#k nÃºmero de grupos
+#P_1 poblaciÃ³n de agentes capa 1
 
 
 # #automatic install of packages if they are not installed already
@@ -74,7 +74,7 @@ crearpoblacioninicial<-function(N,k,P_1){
 #     cercanos<-c(cercanos, grupo)
 #   }
 #   
-#   #Evaluación Expresión
+#   #EvaluaciÃ³n ExpresiÃ³n
 #   suma_dist<-matrix(0,nrow=k,ncol=k)
 #   contador<-matrix(0,nrow=k,ncol=k)
 #   
@@ -106,9 +106,9 @@ crearpoblacioninicial<-function(N,k,P_1){
 #     }
 #     silueta<-c(silueta,si)
 #   }
-#   No_evaluados[f,k+1]<-mean(silueta) #el valor de silueta será el promedio
+#   No_evaluados[f,k+1]<-mean(silueta) #el valor de silueta serÃ¡ el promedio
 #   
-#   #Evaluación Biológica
+#   #EvaluaciÃ³n BiolÃ³gica
 #   suma_dist<-matrix(0,nrow=k,ncol=k)
 #   contador<-matrix(0,nrow=k,ncol=k)
 #   
@@ -144,8 +144,8 @@ crearpoblacioninicial<-function(N,k,P_1){
 # }
 
 #No_evaluados datos a evaluar
-#Me matriz de expresión
-#Mb matriz biológica
+#Me matriz de expresiÃ³n
+#Mb matriz biolÃ³gica
 
 
 
@@ -197,7 +197,7 @@ crearpoblacioninicial<-function(N,k,P_1){
 #         cercanos<-c(cercanos, grupo)
 #       }
 #       
-#       #Evaluación Expresión
+#       #EvaluaciÃ³n ExpresiÃ³n
 #       suma_dist<-matrix(0,nrow=k,ncol=k)
 #       contador<-matrix(0,nrow=k,ncol=k)
 #       
@@ -229,9 +229,9 @@ crearpoblacioninicial<-function(N,k,P_1){
 #         }
 #         silueta<-c(silueta,si)
 #       }
-#       No_evaluados[f,k+1]<-mean(silueta) #el valor de silueta será el promedio
+#       No_evaluados[f,k+1]<-mean(silueta) #el valor de silueta serÃ¡ el promedio
 #       
-#       #Evaluación Biológica
+#       #EvaluaciÃ³n BiolÃ³gica
 #       suma_dist<-matrix(0,nrow=k,ncol=k)
 #       contador<-matrix(0,nrow=k,ncol=k)
 #       
@@ -272,7 +272,7 @@ crearpoblacioninicial<-function(N,k,P_1){
 #     
 #     No_evaluados[,c(k+1,k+2)]<-evaluacionbioyexp
 #     Eva<<-Eva+filas
-#     #???print(paste("Número de evaluaciones actuales: ",Eva))
+#     #â˜ºprint(paste("NÃºmero de evaluaciones actuales: ",Eva))
 #     return(No_evaluados)
 #   }else{
 #     cercanos<-c()
@@ -282,7 +282,7 @@ crearpoblacioninicial<-function(N,k,P_1){
 #       cercanos<-c(cercanos, grupo)
 #     }
 #     
-#     #Evaluación Expresión
+#     #EvaluaciÃ³n ExpresiÃ³n
 #     suma_dist<-matrix(0,nrow=k,ncol=k)
 #     contador<-matrix(0,nrow=k,ncol=k)
 #     
@@ -314,9 +314,9 @@ crearpoblacioninicial<-function(N,k,P_1){
 #       }
 #       silueta<-c(silueta,si)
 #     }
-#     No_evaluados[k+1]<-mean(silueta) #el valor de silueta será el promedio
+#     No_evaluados[k+1]<-mean(silueta) #el valor de silueta serÃ¡ el promedio
 #     
-#     #Evaluación Biológica
+#     #EvaluaciÃ³n BiolÃ³gica
 #     suma_dist<-matrix(0,nrow=k,ncol=k)
 #     contador<-matrix(0,nrow=k,ncol=k)
 #     
@@ -347,9 +347,9 @@ crearpoblacioninicial<-function(N,k,P_1){
 #       }
 #       silueta<-c(silueta,si)
 #     }
-#     No_evaluados[k+2]<-mean(silueta) #el valor de silueta será el promedio
+#     No_evaluados[k+2]<-mean(silueta) #el valor de silueta serÃ¡ el promedio
 #     Eva<<-Eva+1
-#     #print(paste("Número de evaluaciones actuales: ",Eva))
+#     #print(paste("NÃºmero de evaluaciones actuales: ",Eva))
 #     return(No_evaluados)
 #   }
 # }
@@ -368,7 +368,7 @@ evaluar<-function(N,k,No_evaluados,Me,Mb,alpha){
         cercanos<-c(cercanos, grupo)
       }
       
-      #Evaluación Expresión
+      #EvaluaciÃ³n ExpresiÃ³n
       suma_dist<-matrix(0,nrow=k,ncol=k)
       contador<-matrix(0,nrow=k,ncol=k)
       
@@ -400,9 +400,9 @@ evaluar<-function(N,k,No_evaluados,Me,Mb,alpha){
         }
         silueta<-c(silueta,si)
       }
-      No_evaluados[f,k+1]<-mean(silueta) #el valor de silueta será el promedio
+      No_evaluados[f,k+1]<-mean(silueta) #el valor de silueta serÃ¡ el promedio
       
-      #Evaluación Biológica
+      #EvaluaciÃ³n BiolÃ³gica
       suma_dist<-matrix(0,nrow=k,ncol=k)
       contador<-matrix(0,nrow=k,ncol=k)
       
@@ -433,10 +433,10 @@ evaluar<-function(N,k,No_evaluados,Me,Mb,alpha){
         }
         silueta<-c(silueta,si)
       }
-      No_evaluados[f,k+2]<-mean(silueta) #el valor de silueta será el promedio
+      No_evaluados[f,k+2]<-mean(silueta) #el valor de silueta serÃ¡ el promedio
     }
     Eva<<-Eva+filas
-    #print(paste("Número de evaluaciones actuales: ",Eva))
+    #print(paste("NÃºmero de evaluaciones actuales: ",Eva))
     return(No_evaluados)
   }else{
     cercanos<-c()
@@ -446,7 +446,7 @@ evaluar<-function(N,k,No_evaluados,Me,Mb,alpha){
       cercanos<-c(cercanos, grupo)
     }
     
-    #Evaluación Expresión
+    #EvaluaciÃ³n ExpresiÃ³n
     suma_dist<-matrix(0,nrow=k,ncol=k)
     contador<-matrix(0,nrow=k,ncol=k)
     
@@ -478,9 +478,9 @@ evaluar<-function(N,k,No_evaluados,Me,Mb,alpha){
       }
       silueta<-c(silueta,si)
     }
-    No_evaluados[k+1]<-mean(silueta) #el valor de silueta será el promedio
+    No_evaluados[k+1]<-mean(silueta) #el valor de silueta serÃ¡ el promedio
     
-    #Evaluación Biológica
+    #EvaluaciÃ³n BiolÃ³gica
     suma_dist<-matrix(0,nrow=k,ncol=k)
     contador<-matrix(0,nrow=k,ncol=k)
     
@@ -511,9 +511,9 @@ evaluar<-function(N,k,No_evaluados,Me,Mb,alpha){
       }
       silueta<-c(silueta,si)
     }
-    No_evaluados[k+2]<-mean(silueta) #el valor de silueta será el promedio
+    No_evaluados[k+2]<-mean(silueta) #el valor de silueta serÃ¡ el promedio
     Eva<<-Eva+1
-    #print(paste("Número de evaluaciones actuales: ",Eva))
+    #print(paste("NÃºmero de evaluaciones actuales: ",Eva))
     return(No_evaluados)
   }
 }
@@ -530,7 +530,7 @@ evaluar<-function(N,k,No_evaluados,Me,Mb,alpha){
 #       cercanos<-c(cercanos, grupo)
 #     }
 #     
-#     #Evaluación Expresión
+#     #EvaluaciÃ³n ExpresiÃ³n
 #     suma_dist<-matrix(0,nrow=k,ncol=k)
 #     contador<-matrix(0,nrow=k,ncol=k)
 #     
@@ -562,9 +562,9 @@ evaluar<-function(N,k,No_evaluados,Me,Mb,alpha){
 #       }
 #       silueta<-c(silueta,si)
 #     }
-#     No_evaluados[f,k+1]<-mean(silueta) #el valor de silueta será el promedio
+#     No_evaluados[f,k+1]<-mean(silueta) #el valor de silueta serÃ¡ el promedio
 #     
-#     #Evaluación Biológica
+#     #EvaluaciÃ³n BiolÃ³gica
 #     suma_dist<-matrix(0,nrow=k,ncol=k)
 #     contador<-matrix(0,nrow=k,ncol=k)
 #     
@@ -595,7 +595,7 @@ evaluar<-function(N,k,No_evaluados,Me,Mb,alpha){
 #       }
 #       silueta<-c(silueta,si)
 #     }
-#     No_evaluados[f,k+2]<-mean(silueta) #el valor de silueta será el promedio
+#     No_evaluados[f,k+2]<-mean(silueta) #el valor de silueta serÃ¡ el promedio
 #   }
 #   Eva<<-Eva+filas
 #   return(No_evaluados)
@@ -603,7 +603,7 @@ evaluar<-function(N,k,No_evaluados,Me,Mb,alpha){
 
 
 
-#Agentes que se ordenarán por No dominados
+#Agentes que se ordenarÃ¡n por No dominados
 ordenarNoDominados<-function(N,k,Medoids){
   filas<-length(Medoids[,1])
   nivel<-1
@@ -668,7 +668,7 @@ cruzamiento<-function(N,k,sol1,sol2){
     }
   }
   
-  #manejo de restricción (no se puede repetir los medoides)
+  #manejo de restricciÃ³n (no se puede repetir los medoides)
   sol<-c(sol1,sol2)
   for(h in 1:2){
     for(i in 2:k){
@@ -697,7 +697,7 @@ cruzamiento<-function(N,k,sol1,sol2){
   return(hijos)
 }
 
-#realiza una búsqueda local
+#realiza una bÃºsqueda local
 busquedalocal<-function(N,k,sol,Me,Mb,alpha){
   cambios<-sample(0:1, k, replace=T)
   if(sum(cambios)==0){
@@ -905,7 +905,7 @@ sonIguales<-function(k,sol1,sol2){
 }
 
 
-eliminarRepetidos<-function(n,k,Medoids){
+eliminarRepetidos<-function(N,k,Medoids){
   filas=length(Medoids[,1])
   indicesOrd<-order(Medoids[,k+1])
   Eliminar<-c()
@@ -993,7 +993,7 @@ ordenarNodominados3d<-function(N,k,soluciones_2){
 
 subirUnNivel<-function(N,k,Medoids,soluciones_2){
   opcion<-1
-  if(opcion==1){ #opcion 1 se comparan todas las soluciones de la capa 1 y 2 quedarán las mejores
+  if(opcion==1){ #opcion 1 se comparan todas las soluciones de la capa 1 y 2 quedarÃ¡n las mejores
     if(length(dim(soluciones_2))==3){#verificar que es una matriz de 3 dimensiones
       profundidad3D<-length(soluciones_2[1,1,])
       filas<-length(Medoids[,1])
@@ -1015,27 +1015,27 @@ subirUnNivel<-function(N,k,Medoids,soluciones_2){
 }
 
 
-graficarSolucion<-function(Solucion){
-  if(length(dim(Solucion))==3){
-    maximox<-max(Solucion[,k+1,])
-    minimox<-min(Solucion[,k+1,])
-    maximoy<-max(Solucion[,k+2,])
-    minimoy<-min(Solucion[,k+2,])
-    profundidad<-length(Solucion[1,1,])
-    for(i in 1:profundidad){
-      plot(Solucion[,k+1,i],Solucion[,k+2,i],col=ifelse(Solucion[,k+3,i]==1,2,1),lwd=3,xlim=c(minimox,maximox),ylim=c(minimoy,maximoy),xlab="Similitud en expresión génica",ylab="Similitud en procesos biológicos",pch=16)
-      title(c("Finalizando la generación ",i))
-    }
-  }
-  if(length(dim(Solucion))==2){
-    maximox<-max(Solucion[,k+1])
-    minimox<-min(Solucion[,k+1])
-    maximoy<-max(Solucion[,k+2])
-    minimoy<-min(Solucion[,k+2])
-    plot(Solucion[,k+1],Solucion[,k+2],col=ifelse(Solucion[,k+3]==1,2,1),lwd=3,xlim=c(minimox,maximox),ylim=c(minimoy,maximoy),xlab="Similitud en expresión génica",ylab="Similitud en procesos biológicos",pch=16)
-    title(c("Gráfico Solicitado ","***"))
-  }
-}
+# graficarSolucion<-function(Solucion){
+#   if(length(dim(Solucion))==3){
+#     maximox<-max(Solucion[,k+1,])
+#     minimox<-min(Solucion[,k+1,])
+#     maximoy<-max(Solucion[,k+2,])
+#     minimoy<-min(Solucion[,k+2,])
+#     profundidad<-length(Solucion[1,1,])
+#     for(i in 1:profundidad){
+#       plot(Solucion[,k+1,i],Solucion[,k+2,i],col=ifelse(Solucion[,k+3,i]==1,2,1),lwd=3,xlim=c(minimox,maximox),ylim=c(minimoy,maximoy),xlab="Similitud en expresiÃ³n gÃ©nica",ylab="Similitud en procesos biolÃ³gicos",pch=16)
+#       title(c("Finalizando la generaciÃ³n ",i))
+#     }
+#   }
+#   if(length(dim(Solucion))==2){
+#     maximox<-max(Solucion[,k+1])
+#     minimox<-min(Solucion[,k+1])
+#     maximoy<-max(Solucion[,k+2])
+#     minimoy<-min(Solucion[,k+2])
+#     plot(Solucion[,k+1],Solucion[,k+2],col=ifelse(Solucion[,k+3]==1,2,1),lwd=3,xlim=c(minimox,maximox),ylim=c(minimoy,maximoy),xlab="Similitud en expresiÃ³n gÃ©nica",ylab="Similitud en procesos biolÃ³gicos",pch=16)
+#     title(c("GrÃ¡fico Solicitado ","***"))
+#   }
+# }
 
 hiperVolumen<-function(N,k,Medoids){
   largohv<-length(Medoids[,1])
@@ -1055,7 +1055,7 @@ hiperVolumen<-function(N,k,Medoids){
   }
   if(length(dim(pareto))==2){
     pareto<-pareto[order(pareto[,k+1]),]
-    nPareto<-length(pareto[,1]) #número de datos de pareto
+    nPareto<-length(pareto[,1]) #nÃºmero de datos de pareto
     xanterior<-(-1)
     yanterior<-(-1)
     suma<-0 #Suma de los rectangulos que forman el hipervolumen
@@ -1090,7 +1090,7 @@ crearpoblacioninicialEvaluadaDesdeSolucion<-function(N,k,P_2,Solucionpadreevalua
   for(i in 1:(P_2-1)){
     decision<-sample(0:1,1,replace=F)
     if(decision==1){
-      pob[i,1:k]<-mutacion(N,k,Solucionpadreevaluada[1:k])
+      pob[i,1:k]<-busquedalocalconSalto(N,k,Solucionpadreevaluada[1:k],Me,Mb,alpha)
     }else{
       pob[i,1:k]<-busquedalocal(N,k,Solucionpadreevaluada[1:k],Me,Mb,alpha)
     }
@@ -1103,10 +1103,11 @@ crearpoblacioninicialEvaluadaDesdeSolucion<-function(N,k,P_2,Solucionpadreevalua
       }
     }
   }
-  #evaluar nuevos, juntar con solución padre y ordenar por no dominados
+  #evaluar nuevos, juntar con soluciÃ³n padre y ordenar por no dominados
   pob<-evaluar(N,k,pob,Me,Mb,alpha)
   pob<-rbind(Solucionpadreevaluada,pob)
   pob<-ordenarNoDominados(N,k,pob)
+  pob<-crowdingDistance(N,k,pob,0)
   return(pob)
 }
 
@@ -1118,7 +1119,7 @@ crearpoblacioninicialEvaluadaDesdeSolucion<-function(N,k,P_2,Solucionpadreevalua
 #     poblacionduplicada<-eliminarRepetidos(N,k,poblacionduplicada)
 #     soluciones_2[,,a]<-poblacionduplicada[-c((P_2+1):(2*P_2)),]
 
-#calculo que equivale a una generación del algoritmo NSGAII
+#calculo que equivale a una generaciÃ³n del algoritmo NSGAII
 NSGAIInivel2<-function(N,k,Medoidspadres,P_2,Cruz,BusL,Me,Mb,alpha){
   nuevapoblacion<-duplicarpoblacion(N,k,Medoidspadres,Cruz,BusL,Me,Mb,alpha)
   nuevapoblacion<-evaluar(N,k,nuevapoblacion,Me,Mb,alpha)
@@ -1127,11 +1128,6 @@ NSGAIInivel2<-function(N,k,Medoidspadres,P_2,Cruz,BusL,Me,Mb,alpha){
   poblacionduplicada<-crowdingDistance(N,k,poblacionduplicada,0)
   poblacionduplicada<-eliminarRepetidos(N,k,poblacionduplicada)
   poblacionSalida<-poblacionduplicada[-c((P_2+1):(2*P_2)),]
-  hv1<-hiperVolumen(N,k,Medoidspadres)
-  hv2<-hiperVolumen(N,k,poblacionSalida)
-  if(hv2>hv1){
-    mejorosiono<<-T
-  }
   return(poblacionSalida)
 }
 
@@ -1215,6 +1211,20 @@ busquedalocalconSalto<-function(N,k,sol,Me,Mb,alpha){
       }
     }
   }
+  
+  #analizar si la solucion encontrada es igual a la original
+  flag<-0
+  solu<-sol #agregue esto para buscar un error
+  while(flag==0){
+    if(sonIguales(k,sol,solVecino)){
+      cambiar<-sample(1:k,1,replace=T)
+      solVecino[cambiar]<-sample((1:N)[-solu],1,replace=T)
+    }else{
+      flag<-1
+    }
+  }
+  
+  
   #analizar si se repiten medoides y reemplazar por unos al azar si ocurre
   for(i in 2:k){
     for(j in 1:(i-1)){
@@ -1222,17 +1232,6 @@ busquedalocalconSalto<-function(N,k,sol,Me,Mb,alpha){
         posibles<-(1:N)[-c(solVecino[1:(i-1)])]
         solVecino[i]=sample(posibles,1,replace=T)
       }
-    }
-  }
-  
-  #analizar si la solucion encontrada es igual a la original
-  flag<-0
-  while(flag==0){
-    if(sonIguales(k,sol,solVecino)){
-      cambiar<-sample(1:k,1,replace=T)
-      solVecino[cambiar]<-sample((1:N)[-sol],1,replace=T)
-    }else{
-      flag<-1
     }
   }
   return(solVecino)
@@ -1243,10 +1242,10 @@ busquedaLMOLS<-function(N,k,partida,Me,Mb,P_2,alpha){
   exploracion[1,]<-partida
   seleccion<-partida
   for(i in 2:(P_2*2)){
-    nuevo<-busquedalocalconSalto(N,k,seleccion,Me,Mb,alpha)
-    nuevo<-evaluar(N,k,nuevo,Me,Mb,alpha)
+    nuevo<-busquedalocalconSalto(N,k,seleccion[1:k],Me,Mb,alpha)
+    nuevo<-evaluar(N,k,c(nuevo,0,0,0),Me,Mb,alpha)
     exploracion[i,]<-nuevo
-    if(nuevo[k+1]>seleccion[k+1] | nuevo[k+2]>seleccion[k+2]){
+    if((nuevo[k+1]>seleccion[k+1]) | (nuevo[k+2]>seleccion[k+2])){
       seleccion<-nuevo
     }
   }
@@ -1258,8 +1257,8 @@ busquedaNMOLS<-function(N,k,partida,Me,Mb,P_2,alpha){
   exploracion[1,]<-partida
   seleccion<-partida
   for(i in 2:(P_2*2)){
-    nuevo<-busquedalocalconSalto(N,k,seleccion,Me,Mb,alpha)
-    nuevo<-evaluar(N,k,nuevo,Me,Mb,alpha)
+    nuevo<-busquedalocalconSalto(N,k,seleccion[1:k],Me,Mb,alpha)
+    nuevo<-evaluar(N,k,c(nuevo,0,0,0),Me,Mb,alpha)
     exploracion[i,]<-nuevo
     if(nuevo[k+1]>seleccion[k+1] & nuevo[k+2]>seleccion[k+2]){
       seleccion<-nuevo
@@ -1283,32 +1282,32 @@ corregirTamano<-function(N,k,Medoids,P_2){
 }
 
 
-compartirInformacion2<-function(N,k,soluciones_2,Com){
-  profundidad<-length(soluciones_2[1,1,])
-  filas<-length(soluciones_2[,1,1])
-  mejoresFilas<-c()
-  #se buscan las soluciones que aportan mejor hipervolumen
-  for(p in 1:profundidad){
-    mejorhV<-0
-    filaMejor<-0
-    for(f in 1:filas){
-      hV<-(soluciones_2[f,k+1,p]+1)*(soluciones_2[f,k+2,p]+1)
-      if(mejorhV<hV){
-        mejorhV<-hV
-        filaMejor<-f
-      }
-    }
-    mejoresFilas<-c(mejoresFilas,filaMejor)
-  }
-  #anillo
-  if(Com==1){
-    soluciones_2[filas,,1]<-soluciones_2[mejoresFilas[profundidad],,profundidad]
-    for(i in 1:(profundidad-1)){
-      soluciones_2[filas,,i+1]<-soluciones_2[mejoresFilas[i],,i]
-    }
-    return(soluciones_2)
-  }
-}
+# compartirInformacion2<-function(N,k,soluciones_2,Com){
+#   profundidad<-length(soluciones_2[1,1,])
+#   filas<-length(soluciones_2[,1,1])
+#   mejoresFilas<-c()
+#   #se buscan las soluciones que aportan mejor hipervolumen
+#   for(p in 1:profundidad){
+#     mejorhV<-0
+#     filaMejor<-0
+#     for(f in 1:filas){
+#       hV<-(soluciones_2[f,k+1,p]+1)*(soluciones_2[f,k+2,p]+1)
+#       if(mejorhV<hV){
+#         mejorhV<-hV
+#         filaMejor<-f
+#       }
+#     }
+#     mejoresFilas<-c(mejoresFilas,filaMejor)
+#   }
+#   #anillo
+#   if(Com==1){
+#     soluciones_2[filas,,1]<-soluciones_2[mejoresFilas[profundidad],,profundidad]
+#     for(i in 1:(profundidad-1)){
+#       soluciones_2[filas,,i+1]<-soluciones_2[mejoresFilas[i],,i]
+#     }
+#     return(soluciones_2)
+#   }
+# }
 
 compartirInformacion<-function(N,k,memoria,Com){
   memoriasalida<-memoria
@@ -1346,7 +1345,7 @@ compartirInformacion<-function(N,k,memoria,Com){
     return(memoriasalida)
   }
   #random
-  if(com==3){
+  if(Com==3){
     selectrandom<-sample(1:Nagentes,1,replace=T)
     for(a in 1:Nagentes){
       memoriasalida[Npob2,,a]<-mejorescom[selectrandom,]
