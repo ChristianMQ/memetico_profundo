@@ -619,10 +619,8 @@ ordenarNoDominados<-function(N,k,Medoids){
       flag<-T
       for(j in analizar){
         if(i!=j){
-          if(Medoids[i,k+1]<Medoids[j,k+1]){
-            if(Medoids[i,k+2]<Medoids[j,k+2]){
+          if((Medoids[i,k+1]<Medoids[j,k+1] & Medoids[i,k+2]<Medoids[j,k+2]) | (Medoids[i,k+1]<Medoids[j,k+1] & Medoids[i,k+2]==Medoids[j,k+2]) | (Medoids[i,k+1]==Medoids[j,k+1] & Medoids[i,k+2]<Medoids[j,k+2])){
               flag<-F
-            }
           }
         }
       }
@@ -992,27 +990,46 @@ ordenarNodominados3d<-function(N,k,soluciones_2){
 }
 
 subirUnNivel<-function(N,k,Medoids,soluciones_2){
-  opcion<-1
-  if(opcion==1){ #opcion 1 se comparan todas las soluciones de la capa 1 y 2 quedarán las mejores
-    if(length(dim(soluciones_2))==3){#verificar que es una matriz de 3 dimensiones
-      profundidad3D<-length(soluciones_2[1,1,])
-      filas<-length(Medoids[,1])
-      Analizar<-c()
-      for(i in 1:profundidad3D){
-        Analizar<-rbind(Analizar,soluciones_2[,,i])
-      }
-      if(profundidad3D<filas){
-        Analizar<-rbind(Analizar,Medoids[((profundidad3D+1):filas),])
-      }
-      Analizar<-eliminarRepetidos(N,k,Analizar)
-      Analizar<-ordenarNoDominados(N,k,Analizar)
-      Analizar<-crowdingDistance(N,k,Analizar,0)
-      filasAnalizar<-length(Analizar[,1])
-      Analizar<-Analizar[-c((filas+1):filasAnalizar),]
-    }
+  Nagentes<-length(soluciones_2[1,1,])
+  Analizar<-Medoids
+  for(i in 1:Nagentes){
+    Analizar<-rbind(Analizar,soluciones_2[,,i])
   }
+  Analizar<-ordenarNoDominados(N,k,Analizar)
+  Analizar<-crowdingDistance(N,k,Analizar,0)
+  Analizar<-eliminarRepetidos(N,k,Analizar)
+  filasAnalizar<-length(Analizar[,1])
+  filasMedoids<-length(Medoids[,1])
+  Analizar<-Analizar[-c((filasMedoids+1):filasAnalizar),]
   return(Analizar)
 }
+
+  
+  
+
+
+# subirUnNivelB<-function(N,k,Medoids,soluciones_2){
+#   opcion<-1
+#   if(opcion==1){ #opcion 1 se comparan todas las soluciones de la capa 1 y 2 quedarán las mejores
+#     if(length(dim(soluciones_2))==3){#verificar que es una matriz de 3 dimensiones
+#       profundidad3D<-length(soluciones_2[1,1,])
+#       filas<-length(Medoids[,1])
+#       Analizar<-c()
+#       for(i in 1:profundidad3D){
+#         Analizar<-rbind(Analizar,soluciones_2[,,i])
+#       }
+#       if(profundidad3D<filas){
+#         Analizar<-rbind(Analizar,Medoids[((profundidad3D+1):filas),])
+#       }
+#       Analizar<-eliminarRepetidos(N,k,Analizar)
+#       Analizar<-ordenarNoDominados(N,k,Analizar)
+#       Analizar<-crowdingDistance(N,k,Analizar,0)
+#       filasAnalizar<-length(Analizar[,1])
+#       Analizar<-Analizar[-c((filas+1):filasAnalizar),]
+#     }
+#   }
+#   return(Analizar)
+# }
 
 
 # graficarSolucion<-function(Solucion){
