@@ -16,8 +16,8 @@ deepmemetic<-function(N,k,P_1,G_1,P_2,G_2,Cruz,BusL,Sub,Com,Me,Mb,alpha,EvaM,sal
   #print(paste("P_1 ",P_1,";P_2 ",P_2,";G_2 ",G_2, ";Cruz ",Cruz,";Com ",Com))
   Eva<<-0
   if(salida==2){
-    soluciones<-replicate((P_1*(k+3)*G_1),NA)
-    dim(soluciones)<-c(P_1,k+3,G_1)
+    evaluacionvshipervolumen<-c()
+    solucionesporgeneracion<-c()
   }
   estrategiaDeBusqueda<-c(1:3)
   #print(estrategiaDeBusqueda)
@@ -37,14 +37,16 @@ deepmemetic<-function(N,k,P_1,G_1,P_2,G_2,Cruz,BusL,Sub,Com,Me,Mb,alpha,EvaM,sal
     Medoids<-eliminarRepetidos(N,k,Medoids)
     Medoids<-Medoids[-c((P_1+1):(2*P_1)),]
     #inicia la capa 2
-    if(P_2>0 & Medoids[2,k+3]==1 & Eva<EvaM){
+    if(P_2>0 & G_2>0 & Medoids[2,k+3]==1 & Eva<EvaM){
       HVnivel1<-hiperVolumen(N,k,Medoids)
       Nagentepareto<-numeroAgentePareto(N,k,P_1,Medoids)
       memoria<-replicate((P_2*(k+3)*Nagentepareto),NA)
       dim(memoria)<-c(P_2,k+3,Nagentepareto)
       estrategia<-sample(estrategiaDeBusqueda,Nagentepareto,replace=T) #se designa la estrategia de busqueda a cada agente de la capa 2
-      for(j in 1:G_2){
-        for(a in 1:Nagentepareto){ #paralelizable********
+      j<-1
+      while(j<=G_2 & Eva<EvaM){ #Generaciones del nivel 2
+        a<-1
+        while(a<=Nagentepareto){ #busqueda de cada agente del nivel 2 (paralelizable)********
           
           if(estrategia[a]==1){ #NSGAII    #a es el número del agente del nivel 2
             if(j==1){
@@ -122,12 +124,14 @@ deepmemetic<-function(N,k,P_1,G_1,P_2,G_2,Cruz,BusL,Sub,Com,Me,Mb,alpha,EvaM,sal
           if(estrategia[a]==4){
             
           }
+          a<-a+1
         }
         if(j!=G_2){
           #compartir información
           memoria<-compartirInformacion(N,k,memoria,Com)
         }
         #print(estrategiaDeBusqueda)
+        j<-j+1
       }
       
       
@@ -135,10 +139,10 @@ deepmemetic<-function(N,k,P_1,G_1,P_2,G_2,Cruz,BusL,Sub,Com,Me,Mb,alpha,EvaM,sal
     }
     if(salida==2){
       #print("llegue acá")
-      soluciones[,,generacionnivel1]<-Medoids
+      solucionesporgeneracion<-rbind(solucionesporgeneracion,cbind(Medoids,generacionnivel1))
+      evaluacionvshipervolumen<-rbind(evaluacionvshipervolumen,c(Eva,hiperVolumen(N,k,Medoids)))
       #print("llegué acá")
     }
-    #evaluacionvshipervolumen<<-rbind(evaluacionvshipervolumen,c(Eva,hiperVolumen(N,k,Medoids)))
     #print(paste("Finalizando generación ",generacionnivel1,";Número de evaluaciones actuales ",Eva))
   }
   if(salida==0){
@@ -150,7 +154,8 @@ deepmemetic<-function(N,k,P_1,G_1,P_2,G_2,Cruz,BusL,Sub,Com,Me,Mb,alpha,EvaM,sal
     return(hipervolumensalida)
   }
   if(salida==2){
-    return(soluciones)
+    salidalista<-list(solucionesporgeneracion,evaluacionvshipervolumen,Eva,generacionnivel1)
+    return(salidalista)
   }
 }
 
