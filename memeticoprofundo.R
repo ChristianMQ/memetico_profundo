@@ -37,7 +37,7 @@ deepmemetic<-function(N,k,P_1,G_1,P_2,G_2,Cruz,BusL,Sub,Com,Me,Mb,alpha,EvaM,sal
     Medoids<-eliminarRepetidos(N,k,Medoids)
     Medoids<-Medoids[-c((P_1+1):(2*P_1)),]
     #inicia la capa 2
-    if(P_2>0 & G_2>0 & Medoids[2,k+3]==1 & Eva<EvaM){
+    if(P_2>0 & G_2>0 & Medoids[2,k+3]==1 & Eva<EvaM & Eva>(0.4*EvaM)){
       HVnivel1<-hiperVolumen(N,k,Medoids)
       Nagentepareto<-numeroAgentePareto(N,k,P_1,Medoids)
       memoria<-replicate((P_2*(k+3)*Nagentepareto),NA)

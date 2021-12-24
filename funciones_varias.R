@@ -2,6 +2,9 @@
 #k número de grupos
 #P_1 población de agentes capa 1
 
+library(cluster)
+
+
 
 # #automatic install of packages if they are not installed already
 # list.of.packages <- c(
@@ -355,6 +358,60 @@ crearpoblacioninicial<-function(N,k,P_1){
 # }
 
 evaluar<-function(N,k,No_evaluados,Me,Mb,alpha){
+  #primero se evalua si las configuraciones de Medoides a evaluar son varias o solo uno.
+  #print("evaluando")
+  tipo<-length(dim(No_evaluados))
+  if(tipo==2){
+    filas<-length(No_evaluados[,1])
+    for(f in 1:filas){ #calcular silueta para cada fila
+      cercanos<-c()
+      for(i in 1:N){
+        #buscar medoide mas cercano para cada gen
+        grupo<-which.min(alpha*Mb[i,No_evaluados[f,1:k]]+(1-alpha)*Me[i,No_evaluados[f,1:k]]) #0.5*Mb[i,No_evaluados[f,1:k]]+0.5*Me[i,No_evaluados[f,1:k]]
+        cercanos<-c(cercanos, grupo)
+      }
+      
+      #Evaluación Expresión
+      siluetaMe<-silhouette(cercanos,Me)
+      promsiluetaMe<-mean(siluetaMe[,3])
+      No_evaluados[f,k+1]<-promsiluetaMe
+      
+      #Evaluación Biológica
+      siluetaMb<-silhouette(cercanos,Mb)
+      promsiluetaMb<-mean(siluetaMb[,3])
+      No_evaluados[f,k+2]<-promsiluetaMb
+    }
+    Eva<<-Eva+filas
+    #print(paste("Número de evaluaciones actuales: ",Eva))
+    return(No_evaluados)
+  }else{
+    cercanos<-c()
+    for(i in 1:N){
+      #buscar medoide mas cercano para cada gen
+      grupo<-which.min(alpha*Mb[i,No_evaluados[1:k]]+(1-alpha)*Me[i,No_evaluados[1:k]]) #0.5*Mb[i,No_evaluados[1:k]]+0.5*Me[i,No_evaluados[1:k]]
+      cercanos<-c(cercanos, grupo)
+    }
+    
+    #Evaluación Expresión
+    siluetaMe<-silhouette(cercanos,Me)
+    promsiluetaMe<-mean(siluetaMe[,3])
+    No_evaluados[k+1]<-promsiluetaMe
+    
+    #Evaluación Biológica
+    siluetaMb<-silhouette(cercanos,Mb)
+    promsiluetaMb<-mean(siluetaMb[,3])
+    No_evaluados[k+2]<-promsiluetaMb
+    
+    Eva<<-Eva+1
+    #print(paste("Número de evaluaciones actuales: ",Eva))
+    return(No_evaluados)
+  }
+}
+
+
+
+
+evaluarD<-function(N,k,No_evaluados,Me,Mb,alpha){
   #primero se evalua si las configuraciones de Medoides a evaluar son varias o solo uno.
   #print("evaluando")
   tipo<-length(dim(No_evaluados))
